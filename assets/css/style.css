@@ -1,0 +1,630 @@
+/* Jorge Vega portfolio
+   Colours from the JV logo: navy #241F51, deep blue #004E78, blue #0080B0 */
+:root {
+  --ink: #241f51;
+  --deep: #004e78;
+  --blue: #0080b0;
+  --paper: #f6f8fa;
+  --white: #ffffff;
+  --muted: #545a78;
+  --line: #d9e1e8;
+  --on-dark: #e9eef6;
+  --on-dark-muted: #b6c3e8;
+  --radius: 6px;
+  --wrap: 1200px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 104px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  font-family: "Urbanist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--white); /* white, so the area around the case-study panels matches the Gallery below */
+  -webkit-font-smoothing: antialiased;
+}
+
+img, video { display: block; max-width: 100%; height: auto; }
+a { color: var(--deep); text-underline-offset: 0.18em; }
+a:hover { color: var(--blue); }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 2px; }
+
+h1, h2, h3 { line-height: 1.1; margin: 0; letter-spacing: -0.015em; }
+p { margin: 0 0 1em; }
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+
+.skip { position: absolute; left: -999px; top: 8px; background: var(--white); padding: 8px 12px; z-index: 100; }
+.skip:focus { left: 8px; }
+
+/* Header: a frosted-glass pill, floating 16px below the top, as wide as the content */
+.site-header {
+  position: fixed; top: 18px; left: 50%; transform: translateX(-50%); z-index: 20;
+  /* Wider than the content by its own side padding, so the logo starts exactly where the
+     page content starts and "Contact" ends where the content ends. The padding shrinks
+     on narrower screens so the pill always keeps at least 12px from the screen edge. */
+  --hdr-pad: min(28px, calc(var(--gutter) - 12px));
+  width: calc(100% - 2 * var(--gutter) + 2 * var(--hdr-pad));
+  max-width: calc(var(--wrap) - 2 * var(--gutter) + 2 * var(--hdr-pad));
+  border-radius: 999px;
+  /* Light frost with a slight #0080B0 tint, opaque enough that the navy menu
+     stays readable over the dark case-study bands as well as the light page */
+  background: linear-gradient(rgba(0, 128, 176, 0.10), rgba(0, 128, 176, 0.10)), rgba(246, 248, 250, 0.72);
+  border: 1px solid rgba(0, 128, 176, 0.25);
+  box-shadow: 0 10px 30px -18px rgba(0, 78, 120, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  backdrop-filter: blur(20px) saturate(170%);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header { background: rgba(232, 243, 249, 0.96); }
+}
+.site-header .header-inner { max-width: none; padding: 0 calc(var(--hdr-pad) - 1px); } /* minus the 1px border */
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 58px; }
+.brand img { width: 180px; height: auto; }
+.site-header nav ul { list-style: none; display: flex; gap: clamp(14px, 3vw, 32px); margin: 0; padding: 0; }
+.site-header nav a { color: var(--ink); text-decoration: none; font-weight: 600; font-size: 1rem; }
+.site-header nav a:hover { color: var(--blue); }
+
+/* Introduction */
+.intro { padding-top: calc(96px + clamp(40px, 8vw, 65px)); background: var(--white); }
+.place { color: var(--muted); font-weight: 500; margin: 0 0 13px 5px; }
+.intro h1 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  max-width: 15ch;
+}
+.lead { font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.3; color: var(--muted); max-width: 36ch; margin: 18px 0 32px 5px; }
+.button {
+  display: inline-block; background: var(--blue); color: var(--white);
+  font-weight: 700; font-size: 1.1rem; text-decoration: none;
+  padding: 10px 26px; border-radius: 999px;
+}
+.button:hover { background: var(--deep); color: var(--white); }
+
+/* The shelf strip: the real 1920 x 158 animation, edge to edge */
+.shelf { margin: clamp(56px, 8vw, 96px) 0 0; background: var(--deep); padding: 32px 0 0; }
+.shelf-screen { background: #000; border-top: 6px solid #3a3a40; border: 10px solid #c9ced6; }
+/* The frame scales with the strip: 10px at the 1440px design width (10 / 1440 = 0.694%, set to 0.7% because browsers round borders down), never thicker than 10px */
+.shelf { container-type: inline-size; }
+.shelf-screen { border-width: clamp(1px, 0.7cqw, 10px); }
+.shelf-screen video { width: 100%; aspect-ratio: 1920 / 158; object-fit: cover; }
+.shelf figcaption { color: var(--on-dark-muted); font-size: 0.95rem; padding-top: 14px; padding-bottom: 22px; }
+
+/* Section titles */
+.section-title { font-size: clamp(3rem, 5vw, 4rem); font-weight: 800; margin-bottom: 14px; }
+.section-intro { color: var(--muted); max-width: 100ch; }
+
+/* Selected work index */
+.work { padding: clamp(64px, 9vw, 80px) 0 clamp(40px, 6vw, 10px); }
+.work-index { list-style: none; margin: 20px 0 0; padding: 0; }
+.work-index a {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 24px;
+  padding: 22px 0; border-bottom: 1px solid var(--line);
+  text-decoration: none; color: var(--ink);
+}
+.work-index span { font-size: clamp(1.25rem, 2.4vw, 1.75rem); font-weight: 700; line-height: 1.25; }
+.work-index small { color: var(--muted); font-size: 1rem; white-space: nowrap; }
+.work-index a:hover span { color: var(--blue); }
+
+/* Case studies: each sits on its own colour panel. A script grows the panel
+   from a rounded card (content width) to the full window as it scrolls in,
+   and shrinks it again at the end. Without the script, or with reduced
+   motion, the panel simply stays full width. */
+.case {
+  --case-bg: var(--deep);
+  --case-text: var(--on-dark);
+  --case-muted: var(--on-dark-muted);
+  --case-accent: #9fd8ef;
+  position: relative; isolation: isolate;
+  margin-top: clamp(24px, 4vw, 48px);
+  padding-bottom: clamp(72px, 10vw, 80px);
+  color: var(--case-text);
+}
+/* #007DAC rather than #0080B0: white text needs 4.5:1, and #0080B0 gives 4.45:1 */
+.case-blue { --case-bg: #007dac; --case-text: var(--white); --case-muted: var(--white); --case-accent: var(--white); }
+.case-bg { position: absolute; inset: 0; z-index: -1; background: var(--case-bg); will-change: clip-path; }
+.case > .wrap, .case-head > .wrap { padding-left: calc(var(--gutter) + clamp(18px, 3vw, 48px)); padding-right: calc(var(--gutter) + clamp(18px, 3vw, 48px)); }
+.case-head { color: var(--case-text); padding: clamp(48px, 7vw, 100px) 0 clamp(28px, 4vw, 44px); }
+.case-tag { color: var(--case-muted); font-weight: 600; margin-bottom: 14px; }
+.case-head h2 { font-size: clamp(2rem, 4.4vw, 3.5rem); font-weight: 800; max-width: 30ch; color: var(--white); }
+.case-summary { font-size: clamp(1.15rem, 1.8vw, 1.35rem); max-width: 69ch; margin: 22px 0 0; color: var(--case-text); }
+.case a { color: var(--white); }
+.case a:hover { color: var(--case-accent); }
+.case :focus-visible { outline-color: var(--white); }
+
+.media { margin: 0; }
+.zoom {
+  display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in;
+  border-radius: var(--radius); overflow: hidden;
+}
+.zoom img { width: 100%; border-radius: var(--radius); background: var(--white); }
+.hero-media img { box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.45); }
+
+.facts {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px 32px;
+  margin: 0; padding: 40px 0; border-bottom: 2px solid  rgba(255, 255, 255, 0.7);
+}
+.facts dt { font-weight: 700; color: var(--case-accent); font-size: 0.95rem; margin-bottom: 4px; }
+.facts dd { margin: 0; font-size: 1rem; line-height: 1.45; }
+
+/* Two columns: The brief with Outcome underneath on the left, What I did on the right */
+.story { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr; gap: 40px 20px; margin: 50px 0 40px; } /* 50-50, with the same 20px gap as the image grid below so the columns line up */
+.story > section:nth-child(1) { grid-column: 1; grid-row: 1; }
+.story > section:nth-child(2) { grid-column: 2; grid-row: 1 / span 2; }
+.story > section:nth-child(3) { grid-column: 1; grid-row: 2; }
+.story h3 { font-size: 1.25rem; font-weight: 800; margin-bottom: 12px; }
+.story ul { margin: 0; padding-left: 1.1em; }
+.story li { margin-bottom: 0.7em; }
+.story li::marker { color: var(--case-accent); }
+
+.grid { display: grid; gap: 20px; margin-top: 20px; }
+.grid-2 { grid-template-columns: 1fr 1fr; }
+.grid-print { align-items: start; }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-5 { grid-template-columns: repeat(5, 1fr); }
+/* Every image inside a case study: the same thin dark border and rounded corners */
+/* Every image and video inside a case study, plus the screen-animations panel:
+   the same border and rounded corners. The border sits on the clickable wrapper
+   (not the image) so the rounded corners keep the full line width. */
+:root { --case-line: 1.5px solid #babac5; } /* one border setting for the case studies and the Gallery viewer */
+.case .zoom, .case .frame, .case .film video, .case .screens { border: var(--case-line); border-radius: var(--radius); }
+.case .zoom img { border-radius: 0; }
+
+.credit { color: var(--case-muted); font-size: 0.95rem; font-style: italic; margin-top: 28px; max-width: 100ch; }
+/* Whatever comes last in a case study adds no extra space, so every case study ends with the same bottom padding */
+.case > .wrap > :last-child { margin-bottom: 0; }
+
+/* Screen animations */
+.screens { background: var(--deep); color: var(--on-dark); border-radius: var(--radius); padding: clamp(24px, 4vw, 40px); margin: 20px 0; }
+.screens h3 { font-size: 1.4rem; font-weight: 800; color: var(--white); margin-bottom: 8px; }
+.screens > p { color: var(--on-dark-muted); margin-bottom: 24px; }
+.screens figure { margin: 0 0 22px; }
+.screens figure:last-child { margin-bottom: 0; }
+/* The bezel sits on a container around each video (as in the top strip), so it frames the video without covering it */
+.screens .bezel { background: #000; border: 6px solid #c9ced6; }
+/* The bezel scales with each screen: 6px at the 1440px design width, where each screen is about 954px wide (6 / 954 = 0.629%, set to 0.64% because browsers round borders down), never thicker than 6px */
+.screens figure { container-type: inline-size; }
+.screens .bezel { border-width: clamp(1px, 0.64cqw, 6px); }
+.screens video { width: 100%; aspect-ratio: 1920 / 158; object-fit: cover; background: #000; }
+.screens figcaption { color: var(--on-dark-muted); font-size: 0.9rem; margin-top: 8px; }
+
+.film { margin: 28px 0 0; }
+.film video { width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: var(--radius); }
+.film figcaption { color: var(--case-muted, var(--muted)); font-size: 0.95rem; margin-top: 10px; }
+
+/* Website comparisons */
+.compare { margin-top: 48px; }
+.compare h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
+.hint { color: var(--case-muted); font-size: 0.95rem; }
+.compare-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px; }
+.compare figure { margin: 0; }
+.compare figcaption { font-weight: 700; margin-bottom: 10px; }
+.frame {
+  height: min(70vh, 640px); overflow-y: auto;
+  border-radius: var(--radius); background: var(--white); overscroll-behavior: contain;
+}
+
+/* Gallery */
+.gallery { background: var(--white); padding: clamp(100px, 10vw, 60px) 0; }
+.group-title-first { font-size: 1.35rem; font-weight: 800; margin: 30px 0 18px; padding-top: 16px; }
+.group-title { font-size: 1.35rem; font-weight: 800; margin: 52px 0 18px; padding-top: 16px; border-top: 2px solid var(--ink); }
+.tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 28px 20px; }
+.tile { text-align: left; color: var(--ink); font: inherit; overflow: visible; border-radius: 0; }
+.tile img { aspect-ratio: 4 / 3; object-fit: cover; object-position: top; border: 1px solid var(--line); }
+.tiles-tall .tile img { aspect-ratio: 3 / 4; }
+.tile span { display: block; margin-top: 10px; font-weight: 600; font-size: 1rem; line-height: 1.35; }
+.tile:hover span { color: var(--blue); }
+.films { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.films .film { margin: 0; }
+
+/* About */
+.about { background: var(--paper); padding: clamp(40px, 6vw, 64px) 0 clamp(56px, 7vw, 88px); } /* less at the top: the floating header already adds visual space there */
+/* Contact: text on the left, photo on the right */
+.contact-inner { display: grid; grid-template-columns: 1fr minmax(180px, 280px); gap: clamp(28px, 5vw, 64px); align-items: center; }
+.portrait { width: 100%; border: var(--case-line); border-radius: var(--radius); } /* same border as the case-study and Gallery images */
+.about p { max-width: 62ch; font-size: 1.2rem; }
+/* About text in two columns, with the same 20px gap as the cards above so the columns line up with them */
+.about-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 25px; margin-top: 24px; }
+.about-cols p { margin: 0; }
+
+/* Contact */
+.contact { background: var(--deep); color: var(--white); padding: clamp(64px, 9vw, 90px) 0; }
+.contact h2 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; }
+.contact p { font-size: 1.25rem; max-width: 44ch; color: var(--on-dark); }
+.contact-links { list-style: none; margin: 32px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 16px 40px; }
+.contact-links a { color: var(--white); font-size: clamp(1.25rem, 2.5vw, 1.5rem); font-weight: 700; }
+.contact-links a:hover { color: #9fd8ef; }
+.contact :focus-visible { outline-color: var(--white); }
+
+/* Footer */
+.site-footer { background: var(--blue); color: var(--line); font-size: 0.95rem; }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; min-height: 64px; }
+.site-footer p { margin: 0; }
+.site-footer a { color: var(--on-dark); }
+
+/* Lightbox */
+.lightbox { width: 100vw; height: 100vh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(15, 14, 36, 0.9); color: var(--white); }
+.lightbox::backdrop { background: rgba(15, 14, 36, 0.7); }
+.lb-body { height: calc(100% - 72px); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px var(--gutter) 8px; overflow: auto; }
+.lb-body img { max-height: calc(100vh - 200px); width: auto; object-fit: contain; } /* leaves room for a two-line caption */
+.lb-frame { display: contents; }
+/* Tall screenshots (data-scroll on the button): full size up to 1200px wide, in a frame you scroll inside,
+   like the website before/after frames in the case studies */
+.lightbox.is-scroll .lb-frame {
+  display: block; width: auto; max-width: min(1200px, 100%); flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; /* as wide as the image itself (680px eDMs, 1200px web pages), never stretched */
+  border: var(--case-line); border-radius: var(--radius); background: var(--white);
+}
+.lightbox.is-scroll .lb-body { justify-content: flex-start; overflow: hidden; } /* the frame takes the height left above the caption */
+.lightbox.is-scroll .lb-frame img { display: block; width: auto; max-width: 100%; max-height: none; height: auto; }
+.lb-caption { margin: 14px 0 0; text-align: center; color: var(--on-dark); max-width: 70ch; }
+.lb-controls { height: 72px; display: flex; align-items: center; justify-content: center; gap: 16px; }
+.lb-controls button { font: inherit; font-weight: 700; color: var(--white); background: transparent; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 999px; padding: 8px 18px; cursor: pointer; }
+.lb-controls button:hover { background: rgba(255, 255, 255, 0.1); }
+.lb-controls button[hidden] { display: none; }
+.lb-count { color: var(--on-dark-muted); min-width: 4ch; text-align: center; }
+.lb-count:empty { display: none; } /* with a single item there is nothing to count, so Close sits centred */
+
+/* Smaller screens */
+@media (max-width: 960px) {
+  .facts { grid-template-columns: 1fr 1fr; }
+  .story { grid-template-columns: 1fr; grid-template-rows: none; gap: 28px; }
+  .story > section:nth-child(n) { grid-column: auto; grid-row: auto; }
+}
+@media (max-width: 720px) {
+  /* Phones: page content lines up with the logo (left) and menu icon (right):
+     16px from the screen to the header + 1px border + 20px header padding = 37px */
+  :root { --gutter: 37px; }
+  .case > .wrap, .case-head > .wrap { padding-left: var(--gutter); padding-right: var(--gutter); }
+  .case { padding-bottom: 50px; } /* bottom space of each case study on phones */
+  body { font-size: 1.0625rem; }
+  .site-header { top: 10px; border-radius: 30px; width: calc(100% - 32px); max-width: none; }
+  .site-header .header-inner { padding: 10px 20px; }
+  .header-inner { flex-wrap: wrap; gap: 6px 24px; }
+  .intro { padding-top: 140px; }
+  html { scroll-padding-top: 120px; }
+  .brand img { width: 150px; }
+  .work-index a { flex-direction: column; gap: 4px; }
+  .work-index small { white-space: normal; }
+  .grid-2, .compare-pair, .films, .contact-inner, .about-cols { grid-template-columns: 1fr; }
+  .about-cols { gap: 1em; }
+  .grid-4, .grid-5 { grid-template-columns: 1fr 1fr; }
+  .facts { grid-template-columns: 1fr; gap: 16px; }
+  .portrait { max-width: 240px; }
+  .frame { height: 60vh; }
+}
+
+/* Brand names: bold in running text; headings and the work list are already heavier, so they keep their own weight */
+.brand { font-weight: 700; }
+h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-weight: inherit; }
+
+/* Line breaks used only on screens wider than 600px (e.g. before "then" in the XPLAY to REXIMO heading) */
+@media (max-width: 600px) { .br-wide { display: none; } }
+
+/* Phone header: logo plus a menu button; the pill expands downwards to show the links.
+   Only with JavaScript on (html.js); without it the links stay visible as before. */
+.menu-toggle { display: none; }
+@media (max-width: 720px) {
+  .js .site-header .header-inner { padding: 6px 9px 6px 20px; min-height: 50px; }
+  .js .menu-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; padding: 0; border: 0; border-radius: 999px;
+    background: transparent; color: var(--ink); cursor: pointer;
+  }
+  .js .menu-toggle:hover { background: rgba(0, 128, 176, 0.12); }
+  .menu-toggle .bars { position: relative; display: block; width: 22px; height: 16px; }
+  .menu-toggle .bars span {
+    position: absolute; left: 0; width: 100%; height: 2px; border-radius: 2px; background: currentColor;
+    transition: transform 0.25s ease, opacity 0.2s ease, top 0.25s ease;
+  }
+  .menu-toggle .bars span:nth-child(1) { top: 0; }
+  .menu-toggle .bars span:nth-child(2) { top: 7px; }
+  .menu-toggle .bars span:nth-child(3) { top: 14px; }
+  .site-header.open .menu-toggle .bars span:nth-child(1) { top: 7px; transform: rotate(45deg); }
+  .site-header.open .menu-toggle .bars span:nth-child(2) { opacity: 0; }
+  .site-header.open .menu-toggle .bars span:nth-child(3) { top: 7px; transform: rotate(-45deg); }
+
+  .js .site-header nav { display: none; flex-basis: 100%; }
+  .js .site-header.open nav { display: block; }
+  .js .site-header nav ul { flex-direction: column; gap: 0; padding: 0 10px 10px 0; }
+  .js .site-header nav a { display: block; padding: 12px 0; font-size: 1.125rem; border-top: 1px solid rgba(0, 78, 120, 0.15); }
+  .js .intro { padding-top: 124px; }
+  .js { scroll-padding-top: 96px; }
+}
+@media (max-width: 720px) and (prefers-reduced-motion: reduce) {
+  .menu-toggle .bars span { transition: none; }
+}
+
+/* Gallery, Brand and corporate: two logo cards that open their work in the image viewer.
+   Hover follows the reximo.media cards (3px lift, 0.3s ease-out). The gradient darkens to the
+   logo navy on hover, which keeps both logos crisp (a lighter blue would wash them out). */
+.brand-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.brand-card {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  width: 100%; height: 250px; padding: 24px clamp(20px, 3vw, 34px);
+  background: linear-gradient(150deg, var(--deep), var(--blue));
+  border: 1px solid var(--muted); border-radius: var(--radius);
+  color: var(--white); font: inherit; cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.15, 0.8, 0.3, 1), border-color 0.3s cubic-bezier(0.15, 0.8, 0.3, 1), box-shadow 0.3s cubic-bezier(0.15, 0.8, 0.3, 1);
+}
+.brand-card::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(150deg, var(--ink), var(--deep));
+  opacity: 0; transition: opacity 0.3s cubic-bezier(0.15, 0.8, 0.3, 1);
+}
+.brand-card:hover, .brand-card:focus-visible { transform: translateY(-3px); border-color: var(--blue); box-shadow: 0 16px 32px -20px rgba(36, 31, 81, 0.6); }
+.brand-card:hover::before, .brand-card:focus-visible::before { opacity: 1; }
+.brand-card img { width: auto; height: auto; border-radius: 0; background: none; }
+/* Logo sizes balanced by eye and by ink coverage: the Working Cloud logo is a solid cloud (about 48% ink)
+   and the Technology 360 logo mostly thin lines (about 15%), so Technology 360 is shown larger.
+   The max-widths keep the same 341 : 249 ratio when the cards get narrow on phones. */
+.brand-card .logo-t360 { max-height: 100px; max-width: 70%; }
+.brand-card .logo-wc { max-height: 70px; max-width: 70%; }
+.brand-card__tag {
+  display: inline-block; padding: 6px 14px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.28);
+  font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em; color: var(--white);
+}
+@media (max-width: 560px) { .brand-cards { grid-template-columns: 1fr; } .brand-card__tag { font-size: 0.78rem; padding: 6px 12px; } }
+.brand-card__tag { text-wrap: balance; } /* if a label ever wraps, split it into two even lines */
+@media (prefers-reduced-motion: reduce) { .brand-card, .brand-card::before { transition: none; } .brand-card:hover, .brand-card:focus-visible { transform: none; } }
+
+/* Print and documents: three cards in a row on wide screens, stacked below 900px */
+.brand-cards--3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 900px) { .brand-cards--3 { grid-template-columns: 1fr; } }
+.brand-card .logo-fs, .brand-card .logo-xc, .brand-card .logo-as { max-width: none; max-height: none; }
+/* Print and documents logos, balanced by ink coverage (Future Shop 26%, XContent 44%, Aren Sauvage 54% of
+   their outline): the most solid logo is shown narrowest. Percentages keep the balance on narrow cards. */
+.brand-card .logo-fs { width: min(78%, 300px); }
+.brand-card .logo-xc { width: min(75%, 230px); }
+.brand-card .logo-as { width: min(65%, 200px); }
+
+/* Image viewer: page arrows for items with several pages (eBook and catalogue spreads) */
+.lb-page {
+  position: absolute; top: calc(50% - 36px); transform: translateY(-50%); z-index: 2;
+  display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; padding: 0 0 4px;
+  border: 1px solid rgba(255, 255, 255, 0.45); border-radius: 999px; background: rgba(15, 14, 36, 0.6);
+  color: var(--white); font: inherit; font-size: 2rem; line-height: 1; cursor: pointer;
+}
+.lb-page:hover { background: rgba(255, 255, 255, 0.14); }
+.lb-page:disabled { opacity: 0.3; cursor: default; }
+.lb-page[hidden] { display: none; }
+.lb-page-prev { left: 16px; }
+.lb-page-next { right: 16px; }
+.lb-pageno { margin: 12px 0 0; color: var(--on-dark-muted); font-size: 0.95rem; font-variant-numeric: tabular-nums; }
+.lb-pageno[hidden] { display: none; }
+.lb-pageno + .lb-caption { margin-top: 4px; }
+.lb-pageno[hidden] + .lb-caption { margin-top: 20px; } /* single items: clear space between the item and its caption */
+/* keep wide spreads clear of the arrows on larger screens; on phones the arrows sit over the image edge */
+@media (min-width: 721px) { .lightbox.has-pages .lb-body { padding-left: 84px; padding-right: 84px; } .lightbox.has-pages .lb-body img { max-height: calc(100vh - 240px); } }
+@media (max-width: 720px) { .lb-page { width: 44px; height: 44px; font-size: 1.7rem; } .lb-page-prev { left: 8px; } .lb-page-next { right: 8px; } }
+
+/* eDM row: the G.A.I. logo sized against the Future Shop logo (similar ink coverage, 25% vs 26%,
+   but a taller shape; shown a little larger than an exact ink match so its metal detail stays readable) */
+.brand-card .logo-gai { max-width: none; max-height: none; width: min(70%, 220px); }
+
+/* Gallery: Video and Concept work side by side, each with its own heading line; stacked on phones */
+.gallery-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+@media (max-width: 560px) { .gallery-pair { grid-template-columns: 1fr; } }
+/* Videos in the image viewer: 16:9, as large as fits above the caption */
+.lb-video { display: block; width: min(100%, calc((100vh - 200px) * 16 / 9)); aspect-ratio: 16 / 9; background: #000; border-radius: var(--radius); }
+.lb-video[hidden], .lb-frame img[hidden] { display: none; }
+
+/* Scroll reveal, matching reximo.media: fade in and slide up 24px over 0.8s, with 0.1s steps between
+   elements in the same section. Only with JavaScript on (html.js); off for reduced motion. */
+.js .rv { opacity: 0; transform: translateY(24px); transition: opacity 0.8s cubic-bezier(0.15, 0.8, 0.3, 1), transform 0.8s cubic-bezier(0.15, 0.8, 0.3, 1); }
+.js .rv.is-visible { opacity: 1; transform: none; }
+.rv-d1 { transition-delay: 0.1s; }
+.rv-d2 { transition-delay: 0.2s; }
+.rv-d3 { transition-delay: 0.3s; }
+@media (prefers-reduced-motion: reduce) { .js .rv { opacity: 1; transform: none; transition: none; } }
+
+/* Gallery items in the viewer: the same border as the case studies. Images and videos have rounded
+   corners; documents and flyers (marked with data-square on their card) have square corners. */
+.lightbox.is-gallery .lb-frame img, .lightbox.is-gallery .lb-video { border: var(--case-line); border-radius: var(--radius); }
+.lightbox.is-gallery.is-square .lb-frame img { border-radius: 0; }
+.lightbox.is-gallery.is-scroll .lb-frame img { border: 0; border-radius: 0; } /* scrolling frame already has the border */
+
+/* ------------------------------------------------------------------
+   Case-study cards (only with JavaScript on, html.js).
+   Each case study starts closed: a card with the tag, title, summary and the
+   lead image. EXPAND opens the rest; the same button (kept in view while the
+   case study is open) turns into COLLAPSE. Without JavaScript everything shows.
+   ------------------------------------------------------------------ */
+.case-toggle-bar { display: none; }
+.js .case-toggle-bar {
+  display: block; position: absolute; top: 0; left: 0; right: 0; height: 0; z-index: 5;
+}
+.case-toggle-bar .wrap { display: flex; justify-content: flex-end; padding-right: calc(var(--gutter) + clamp(18px, 3vw, 48px)); }
+.case-toggle {
+  position: relative; display: inline-flex; align-items: center;
+  margin-top: clamp(22px, 3vw, 32px); padding: 0; background: none; border: 0;
+  font: inherit; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--white); cursor: pointer;
+}
+/* The circle stays put; the word sits beside it: EXPAND on its left, COLLAPSE on its right */
+.case-toggle__label { position: absolute; top: 50%; right: calc(100% + 9px); transform: translateY(-50%); white-space: nowrap; }
+.case.is-open .case-toggle__label { right: auto; left: calc(100% + 9px); }
+/* COLLAPSE only appears once the open panel fills the window (the script adds .is-full) */
+.js .case.is-open .case-toggle__label { opacity: 0; transition: none; } /* hides at once, so the word never flashes when the button is clicked */
+.js .case.is-open.is-full .case-toggle__label { opacity: 1; transition: opacity 0.3s ease, color 0.35s cubic-bezier(0.15, 0.8, 0.3, 1); } /* fades in */
+@media (prefers-reduced-motion: reduce) { .js .case.is-open .case-toggle__label { opacity: 1; } } /* no growing panel there, so always show it */
+/* Up to 1099px wide there is not enough room right of the circle, so COLLAPSE stays on the left too */
+@media (max-width: 1099px) { .case.is-open .case-toggle__label { left: auto; right: calc(100% + 9px); } }
+.case-toggle__icon {
+  display: grid; place-items: center; width: 35px; height: 35px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5); color: var(--case-bg);
+  box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.45);
+  transition: transform 0.35s cubic-bezier(0.15, 0.8, 0.3, 1), box-shadow 0.35s cubic-bezier(0.15, 0.8, 0.3, 1), background-color 0.35s cubic-bezier(0.15, 0.8, 0.3, 1);
+}
+.case-toggle__label { color: rgba(255, 255, 255, 0.5); text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35); transition: color 0.35s cubic-bezier(0.15, 0.8, 0.3, 1); }
+/* circle and label at 50%; full white on hover or keyboard focus */
+.case-toggle:hover .case-toggle__icon, .case-toggle:focus-visible .case-toggle__icon { background: var(--white); }
+.case-toggle:hover .case-toggle__label, .case-toggle:focus-visible .case-toggle__label { color: var(--white); }
+.case-toggle:hover .case-toggle__icon, .case-toggle:focus-visible .case-toggle__icon { transform: scale(1.08); box-shadow: 0 10px 22px -8px rgba(0, 0, 0, 0.5); }
+.case-toggle:focus-visible { outline: none; }
+.case-toggle:focus-visible .case-toggle__icon { outline: 3px solid var(--white); outline-offset: 3px; }
+.case-toggle__arrow { width: 34px; height: 34px; transition: transform 0.45s cubic-bezier(0.15, 0.8, 0.3, 1); }
+/* Open: the arrow turns to point back (COLLAPSE), and the button follows the reader down the case study */
+.js .case.is-open .case-toggle-bar { position: sticky; top: calc(90px - clamp(22px, 3vw, 32px)); } /* the button itself sits 12px below the header */
+.case.is-open .case-toggle__arrow { transform: rotate(90deg); }
+
+/* The part that opens and closes: a grid row animating between 0 and its natural height */
+.case-body { display: grid; grid-template-rows: 1fr; }
+.case-body-inner { min-height: 0; }
+.case-body-inner > :last-child { margin-bottom: 0; }
+.js .case-body { transition: grid-template-rows 0.25s cubic-bezier(0.4, 0, 1, 1); } /* closing: quick fold-up */
+.js .case-body-inner { overflow: hidden; }
+.js .case.is-settled .case-body-inner { overflow: visible; } /* once fully open, nothing is clipped (focus rings) */
+.js .case.is-closed .case-body { grid-template-rows: 0fr; }
+.js .case.no-anim .case-body, .js .case.no-anim .case-toggle__arrow { transition: none; }
+
+/* Spacing inside a case study now that the summary and lead image are part of the opening section */
+.case-body-inner > .case-summary { margin-top: 0; }
+.case-body-inner > .hero-media { margin-top: clamp(28px, 4vw, 44px); }
+.js .case .case-head { padding: clamp(84px, 9vw, 96px) 0 22px; }
+.js .case .case-head h2 { font-size: clamp(2rem, 3.4vw, 2.75rem); text-wrap: balance; } /* one size, open or closed, so the title never jumps */
+.js .case .case-head h2 br.br-wide { display: none; } /* fewer, fuller lines beside the image */
+
+/* Closed card: tag and title on the left 65%, the lead image filling the right 35%.
+   --card-edge and --card-radius come from the script, so the image lines up with the card shape. */
+.js .case { --card-edge: calc(max(0px, (100% - var(--wrap)) / 2) + var(--gutter)); --card-radius: 28px; }
+.js .case.is-closed { padding-bottom: 0; cursor: pointer; }
+.js .case.is-closed .case-main { padding-bottom: clamp(14px, 2.5vw, 30px); }
+@media (min-width: 721px) {
+  .js .case .case-head > .wrap { padding-right: calc((min(100%, var(--wrap)) - 2 * var(--gutter)) * 0.45 + var(--gutter) + 40px); } /* text column 55% */
+}
+.case-cover { display: none; }
+.js .case-cover {
+  display: block; position: absolute; z-index: 1; pointer-events: none; overflow: hidden;
+  top: 0; bottom: 0; right: var(--card-edge);
+  width: calc((100% - 2 * var(--card-edge)) * 0.45); /* image column 45% */
+  border-radius: 0 var(--card-radius) var(--card-radius) 0;
+  /* closing is the opening in reverse: the image implodes from the whole card back into its column as it appears */
+  transition: width 0.8s cubic-bezier(0.5, 0, 0.2, 1), height 0.8s cubic-bezier(0.5, 0, 0.2, 1), border-radius 0.8s cubic-bezier(0.5, 0, 0.2, 1),
+              opacity 0.75s cubic-bezier(0.4, 0, 0.6, 1) 0.1s, visibility 0s linear 0s; /* closing: starts halfway through the shrink, slower; fades in gradually, reaching full strength as it settles */
+}
+.js .case-cover img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; background: none; transition: transform 0.8s cubic-bezier(0.5, 0, 0.2, 1); }
+/* a soft shade in the top-right corner keeps the EXPAND button readable over the photo */
+.js .case-cover::after { content: ""; position: absolute; inset: 0; background: radial-gradient(70% 55% at 100% 0%, rgba(0, 20, 40, 0.55), rgba(0, 20, 40, 0) 70%); }
+/* Opening: the image grows to cover the whole card (at its closed size) while it fades out */
+.js .case.is-open .case-cover {
+  bottom: auto; height: var(--cover-h, 100%); width: calc(100% - 2 * var(--card-edge)); border-radius: var(--card-radius);
+  opacity: 0; visibility: hidden;
+  /* explosive: bursts across the card in 0.3s and is fully faded by then, before the case study starts opening */
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s cubic-bezier(0.4, 0, 1, 1) 0.08s, visibility 0s linear 0.3s;
+}
+.js .case.is-open .case-cover img { transform: scale(1.18); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+/* the case study only starts opening once the image has gone */
+.js .case.is-open .case-body { transition: grid-template-rows 0.7s cubic-bezier(0.65, 0, 0.35, 1) 0.3s; }
+/* the card's bottom spacing also waits until then, so the card doesn't grow at all during the burst */
+.js .case.is-open .case-main { transition: padding-bottom 0s linear 0.3s; }
+.js .case.rv.is-open { transition: opacity 0.8s cubic-bezier(0.15, 0.8, 0.3, 1), transform 0.8s cubic-bezier(0.15, 0.8, 0.3, 1), translate 0.35s cubic-bezier(0.15, 0.8, 0.3, 1), filter 0.35s cubic-bezier(0.15, 0.8, 0.3, 1), padding-bottom 0s linear 0.3s; }
+.js .case.no-anim .case-cover, .js .case.no-anim .case-cover img { transition: none; }
+/* Closing, step 1: the case study folds up first while the image waits, invisible and full-card size
+   (as it was at the end of the opening burst); step 2 (the script removes .is-closing-1) is the burst in reverse */
+.js .case.is-closing-1 .case-cover {
+  bottom: auto; height: var(--cover-h, 100%); width: calc(100% - 2 * var(--card-edge)); border-radius: var(--card-radius);
+  opacity: 0; visibility: visible; transition: none;
+}
+.js .case.is-closing-1 .case-cover img { transform: scale(1.18); transition: none; }
+.js .case.is-closing .case-cover { max-height: var(--cover-h, none); } /* never taller than the closed card while it shrinks back */
+
+/* Only the visible card reacts to the mouse, not the empty page on either side of it: the article is
+   full width, so everything in it ignores the pointer except the coloured card shape (whose clip-path
+   limits it to the card) and the EXPAND button */
+.js .case.is-closed, .js .case.is-closed * { pointer-events: none; }
+.js .case.is-closed .case-bg, .js .case.is-closed .case-toggle, .js .case.is-closed .case-toggle * { pointer-events: auto; }
+.js .case.rv { transition: opacity 0.8s cubic-bezier(0.15, 0.8, 0.3, 1), transform 0.8s cubic-bezier(0.15, 0.8, 0.3, 1), translate 0.35s cubic-bezier(0.15, 0.8, 0.3, 1), filter 0.35s cubic-bezier(0.15, 0.8, 0.3, 1); }
+/* A darker sheen fades in over the card colour on hover, as on the Gallery cards */
+.case-bg::after {
+  content: ""; position: absolute; inset: 0; opacity: 0; pointer-events: none;
+  background: linear-gradient(150deg, rgba(0, 0, 0, 0) 30%, rgba(20, 18, 60, 0.35));
+  transition: opacity 0.35s cubic-bezier(0.15, 0.8, 0.3, 1);
+}
+@media (hover: hover) {
+  .js .case.is-closed:hover { translate: 0 -4px; filter: drop-shadow(0 18px 22px rgba(36, 31, 81, 0.28)); }
+  .js .case.is-closed:hover .case-bg::after { opacity: 1; }
+  .js .case.is-closed:hover .case-cover img { transform: scale(1.05); transition: transform 0.6s cubic-bezier(0.15, 0.8, 0.3, 1); }
+  .js .case.is-closed:hover .case-toggle__icon { transform: scale(1.08); box-shadow: 0 10px 22px -8px rgba(0, 0, 0, 0.5); background: var(--white); }
+  .js .case.is-closed:hover .case-toggle__label { color: var(--white); }
+}
+@media (min-width: 721px) and (max-width: 960px) { .js .case .case-head { padding-top: 88px; } }
+/* Phones: the image runs across the top of the closed card, with the tag and title below it */
+@media (max-width: 720px) {
+  .case-toggle { margin-top: 18px; }
+  .case-toggle__icon { width: 35px; height: 35px; }
+  .case-toggle__arrow { width: 28px; height: 28px; }
+  .js .case.is-open .case-toggle-bar { top: 56px; }
+  .case-toggle-bar .wrap { padding-right: var(--gutter); }
+  .js .case-cover { top: 0; bottom: auto; height: 46vw; width: calc(100% - 2 * var(--card-edge)); border-radius: var(--card-radius) var(--card-radius) 0 0; }
+  .js .case .case-head { padding-top: calc(46vw + 28px); transition: padding-top 0.25s cubic-bezier(0.4, 0, 1, 1); } /* closing: in step with the quick fold-up */
+  .js .case.is-open .case-head { padding-top: 80px; transition: padding-top 0.7s cubic-bezier(0.65, 0, 0.35, 1) 0.3s; } /* the space the image used closes up once it has faded */
+  .js .case.no-anim .case-head { transition: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .case-body, .case-toggle__arrow, .case-toggle__icon, .js .case.is-closed, .case-bg::after, .js .case-cover, .js .case-cover img, .js .case .case-head { transition: none !important; }
+  .js .case.is-closed:hover { translate: none; }
+  .js .case.is-closed:hover .case-cover img { transform: none; }
+  /* no growing panels with reduced motion, so a closed case still looks like a card */
+  .js .case.is-closed .case-bg { left: var(--card-edge); right: var(--card-edge); border-radius: var(--card-radius); }
+}
+
+/* Image viewer: the image itself is a "next" button whenever there is more to see */
+.lightbox.has-more:not(.is-scroll) .lb-frame img { cursor: pointer; }
+
+/* With the shelf-screen strip hidden, the introduction keeps some space before the blue Selected work band */
+.intro { padding-bottom: clamp(56px, 8vw, 96px); }
+
+/* Selected work and Gallery: the title and intro sit on a full-width #004E78 band with white text;
+   the list and the cards below stay on white */
+.work { padding-top: 0; padding-bottom: 0; } /* the first case study sits the same distance below the list as the cards are apart */
+.gallery { padding-top: 0; margin-top: clamp(40px, 5vw, 64px); } /* space between the last case study and the Gallery band */
+.section-band {
+  position: relative; isolation: isolate; overflow: hidden; color: var(--white); padding: clamp(50px, 5vw, 70px) 0 clamp(40px, 4vw, 50px);
+  /* mesh gradient: soft pools of the site's blues and navy blended into #004E78 */
+  background:
+    radial-gradient(55% 140% at 88% 10%, rgba(0, 128, 176, 0.95) 0%, rgba(0, 128, 176, 0) 62%),
+    radial-gradient(40% 120% at 100% 100%, rgba(95, 200, 230, 0.45) 0%, rgba(95, 200, 230, 0) 60%),
+    radial-gradient(60% 170% at 0% 110%, rgba(36, 31, 81, 0.95) 0%, rgba(36, 31, 81, 0) 65%),
+    radial-gradient(35% 90% at 55% -20%, rgba(0, 95, 140, 0.9) 0%, rgba(0, 95, 140, 0) 70%),
+    var(--deep);
+}
+/* thin contour lines on the right half only, fading in from the middle*/
+.section-band::before {
+  content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 100%; z-index: -1; pointer-events: none;
+  background: url(../img/band-contours.svg) right center / cover no-repeat;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 0%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 0%);
+}
+.section-band .section-title, .section-band .section-intro { color: var(--white); }
+
+
+/* Every case-study card is the same height: the script sets --case-head-h to the tallest tag-and-title
+   block of the three (re-measured when the window size or the font changes) */
+.js .case .case-head > .wrap { min-height: var(--case-head-h, 0px); }
+
+/* While a case study shrinks back to its card, the script controls its height: the opening section keeps
+   its full contents (it is trimmed from the bottom), and the image waits for its turn */
+.js .case.is-shrinking .case-body { grid-template-rows: 1fr; transition: none; }
+.js .case.is-shrinking .case-head, .js .case.is-shrinking .case-main { transition: none; } /* the script moves these frame by frame */
+
+/* EXPAND / COLLAPSE buttons use Jorge's artwork (white circle, chevron cut out): arrw-exp.png and arrw-col.png.
+   The circle shows at 50% and goes to full strength on hover or keyboard focus, as before. */
+.js .case-toggle__icon {
+  background: url(../img/arrw-exp.png) center / contain no-repeat; opacity: 0.5;
+  transition: transform 0.35s cubic-bezier(0.15, 0.8, 0.3, 1), box-shadow 0.35s cubic-bezier(0.15, 0.8, 0.3, 1), opacity 0.35s cubic-bezier(0.15, 0.8, 0.3, 1);
+}
+.js .case.is-open .case-toggle__icon { background-image: url(../img/arrw-col.png); }
+.js .case-toggle__arrow { display: none; }
+.js .case-toggle:hover .case-toggle__icon, .js .case-toggle:focus-visible .case-toggle__icon { background: url(../img/arrw-exp.png) center / contain no-repeat; opacity: 1; }
+.js .case.is-open .case-toggle:hover .case-toggle__icon, .js .case.is-open .case-toggle:focus-visible .case-toggle__icon { background-image: url(../img/arrw-col.png); }
+@media (hover: hover) { .js .case.is-closed:hover .case-toggle__icon { background: url(../img/arrw-exp.png) center / contain no-repeat; opacity: 1; } }
+.js .case-toggle::after { content: ""; position: absolute; width: 0; height: 0; overflow: hidden; background: url(../img/arrw-col.png); } /* loads the collapse arrow in advance */

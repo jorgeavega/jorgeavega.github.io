@@ -1,0 +1,5 @@
+# Files that stay on this Mac and are not uploaded to GitHub
+.DS_Store
+# Illustrator exports of the arrows (the site uses the PNG versions)
+assets/img/arrw-exp.svg
+assets/img/arrw-col.svg
