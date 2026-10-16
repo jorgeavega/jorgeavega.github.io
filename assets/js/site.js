@@ -216,8 +216,8 @@
     if (away) away.observe(c);
     cardState(c, false);
     var btn = c.querySelector('.case-toggle');
-    if (btn) btn.addEventListener('click', function () {
-      if (c.classList.contains('is-closed')) openCard(c, true); else { closeCard(c); btn.focus(); }
+    if (btn) btn.addEventListener('click', function (e) {
+      if (c.classList.contains('is-closed')) openCard(c, true); else { closeCard(c); if (e.detail === 0) btn.focus(); } // refocus only after keyboard use; after a tap it would leave the circle highlighted
     });
     // a click anywhere on a closed card opens it (instead of opening the image viewer)
     c.addEventListener('click', function (e) {

@@ -471,7 +471,7 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
 .case-toggle:focus-visible .case-toggle__label { color: var(--white); }
 .case-toggle:focus-visible .case-toggle__icon { transform: scale(1.08); box-shadow: 0 10px 22px -8px rgba(0, 0, 0, 0.5); }
 /* hover only on devices that really hover: on touch screens :hover sticks after a tap and kept the circle white */
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .case-toggle:hover .case-toggle__icon { background: var(--white); transform: scale(1.08); box-shadow: 0 10px 22px -8px rgba(0, 0, 0, 0.5); }
   .case-toggle:hover .case-toggle__label { color: var(--white); }
 }
