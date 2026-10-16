@@ -467,9 +467,14 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
 }
 .case-toggle__label { color: rgba(255, 255, 255, 0.5); text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35); transition: color 0.35s cubic-bezier(0.15, 0.8, 0.3, 1); }
 /* circle and label at 50%; full white on hover or keyboard focus */
-.case-toggle:hover .case-toggle__icon, .case-toggle:focus-visible .case-toggle__icon { background: var(--white); }
-.case-toggle:hover .case-toggle__label, .case-toggle:focus-visible .case-toggle__label { color: var(--white); }
-.case-toggle:hover .case-toggle__icon, .case-toggle:focus-visible .case-toggle__icon { transform: scale(1.08); box-shadow: 0 10px 22px -8px rgba(0, 0, 0, 0.5); }
+.case-toggle:focus-visible .case-toggle__icon { background: var(--white); }
+.case-toggle:focus-visible .case-toggle__label { color: var(--white); }
+.case-toggle:focus-visible .case-toggle__icon { transform: scale(1.08); box-shadow: 0 10px 22px -8px rgba(0, 0, 0, 0.5); }
+/* hover only on devices that really hover: on touch screens :hover sticks after a tap and kept the circle white */
+@media (hover: hover) {
+  .case-toggle:hover .case-toggle__icon { background: var(--white); transform: scale(1.08); box-shadow: 0 10px 22px -8px rgba(0, 0, 0, 0.5); }
+  .case-toggle:hover .case-toggle__label { color: var(--white); }
+}
 .case-toggle:focus-visible { outline: none; }
 .case-toggle:focus-visible .case-toggle__icon { outline: 3px solid var(--white); outline-offset: 3px; }
 .case-toggle__arrow { width: 34px; height: 34px; transition: transform 0.45s cubic-bezier(0.15, 0.8, 0.3, 1); }
