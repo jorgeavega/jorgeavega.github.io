@@ -10,7 +10,7 @@
   --line: #d9e1e8;
   --on-dark: #e9eef6;
   --on-dark-muted: #b6c3e8;
-  --radius: 6px;
+  --radius: 12px;
   --wrap: 1200px;
   --gutter: clamp(16px, 4vw, 40px);
 }
@@ -74,13 +74,13 @@ p { margin: 0 0 1em; }
 .intro { padding-top: calc(96px + clamp(40px, 8vw, 65px)); background: var(--white); }
 .place { color: var(--muted); font-weight: 500; margin: 0 0 13px 5px; }
 .intro h1 {
-  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-size: clamp(2rem, 5.5vw, 4.5rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.02;
   max-width: 15ch;
 }
-.lead { font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.3; color: var(--muted); max-width: 36ch; margin: 18px 0 32px 5px; }
+.lead { font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.3; color: var(--muted); max-width: 42ch; margin: 18px 0 32px 5px; }
 .button {
   display: inline-block; background: var(--blue); color: var(--white);
   font-weight: 700; font-size: 1.1rem; text-decoration: none;
@@ -123,10 +123,11 @@ p { margin: 0 0 1em; }
   --case-muted: var(--on-dark-muted);
   --case-accent: #9fd8ef;
   position: relative; isolation: isolate;
-  margin-top: clamp(24px, 4vw, 48px);
+  margin-top: clamp(26px, 4.2vw, 50px);
   padding-bottom: clamp(72px, 10vw, 80px);
   color: var(--case-text);
 }
+.case + .case { margin-top: 25px; } /* space between one case-study card and the next */
 /* #007DAC rather than #0080B0: white text needs 4.5:1, and #0080B0 gives 4.45:1 */
 .case-blue { --case-bg: #007dac; --case-text: var(--white); --case-muted: var(--white); --case-accent: var(--white); }
 .case-bg { position: absolute; inset: 0; z-index: -1; background: var(--case-bg); will-change: clip-path; }
@@ -349,14 +350,14 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
   position: relative; isolation: isolate; overflow: hidden;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
   width: 100%; height: 250px; padding: 24px clamp(20px, 3vw, 34px);
-  background: linear-gradient(150deg, var(--deep), var(--blue));
+  background: linear-gradient(to top right, var(--deep), var(--blue)); /* dark at bottom-left corner, light at top-right */
   border: 1px solid var(--muted); border-radius: var(--radius);
   color: var(--white); font: inherit; cursor: pointer;
   transition: transform 0.3s cubic-bezier(0.15, 0.8, 0.3, 1), border-color 0.3s cubic-bezier(0.15, 0.8, 0.3, 1), box-shadow 0.3s cubic-bezier(0.15, 0.8, 0.3, 1);
 }
 .brand-card::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(150deg, var(--ink), var(--deep));
+  background: linear-gradient(to top right, var(--ink), var(--deep)); /* hover: same direction, darker */
   opacity: 0; transition: opacity 0.3s cubic-bezier(0.15, 0.8, 0.3, 1);
 }
 .brand-card:hover, .brand-card:focus-visible { transform: translateY(-3px); border-color: var(--blue); box-shadow: 0 16px 32px -20px rgba(36, 31, 81, 0.6); }
@@ -495,7 +496,7 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
 
 /* Closed card: tag and title on the left 65%, the lead image filling the right 35%.
    --card-edge and --card-radius come from the script, so the image lines up with the card shape. */
-.js .case { --card-edge: calc(max(0px, (100% - var(--wrap)) / 2) + var(--gutter)); --card-radius: 28px; }
+.js .case { --card-edge: calc(max(0px, (100% - var(--wrap)) / 2) + var(--gutter)); --card-radius: 12px; }
 .js .case.is-closed { padding-bottom: 0; cursor: pointer; }
 .js .case.is-closed .case-main { padding-bottom: clamp(14px, 2.5vw, 30px); }
 @media (min-width: 721px) {
@@ -586,24 +587,8 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
 /* Selected work and Gallery: the title and intro sit on a full-width #004E78 band with white text;
    the list and the cards below stay on white */
 .work { padding-top: 0; padding-bottom: 0; } /* the first case study sits the same distance below the list as the cards are apart */
-.gallery { padding-top: 0; margin-top: clamp(40px, 5vw, 64px); } /* space between the last case study and the Gallery band */
-.section-band {
-  position: relative; isolation: isolate; overflow: hidden; color: var(--white); padding: clamp(50px, 5vw, 70px) 0 clamp(40px, 4vw, 50px);
-  /* mesh gradient: soft pools of the site's blues and navy blended into #004E78 */
-  background:
-    radial-gradient(55% 140% at 88% 10%, rgba(0, 128, 176, 0.95) 0%, rgba(0, 128, 176, 0) 62%),
-    radial-gradient(40% 120% at 100% 100%, rgba(95, 200, 230, 0.45) 0%, rgba(95, 200, 230, 0) 60%),
-    radial-gradient(60% 170% at 0% 110%, rgba(36, 31, 81, 0.95) 0%, rgba(36, 31, 81, 0) 65%),
-    radial-gradient(35% 90% at 55% -20%, rgba(0, 95, 140, 0.9) 0%, rgba(0, 95, 140, 0) 70%),
-    var(--deep);
-}
-/* thin contour lines on the right half only, fading in from the middle*/
-.section-band::before {
-  content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 100%; z-index: -1; pointer-events: none;
-  background: url(../img/band-contours.svg) right center / cover no-repeat;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 0%);
-  mask-image: linear-gradient(to right, transparent 0%, #000 0%);
-}
+.gallery { padding-top: 0; padding-bottom: 60px; margin-top: clamp(40px, 5vw, 65px); } /* margin-top: space between the last case study and the Gallery band; padding-bottom: space between the last Gallery item and Let's talk */
+.section-band { color: var(--white); padding: clamp(50px, 5vw, 70px) 0 clamp(40px, 4vw, 50px); background: var(--blue); }
 .section-band .section-title, .section-band .section-intro { color: var(--white); }
 
 
@@ -628,3 +613,33 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
 .js .case.is-open .case-toggle:hover .case-toggle__icon, .js .case.is-open .case-toggle:focus-visible .case-toggle__icon { background-image: url(../img/arrw-col.png); }
 @media (hover: hover) { .js .case.is-closed:hover .case-toggle__icon { background: url(../img/arrw-exp.png) center / contain no-repeat; opacity: 1; } }
 .js .case-toggle::after { content: ""; position: absolute; width: 0; height: 0; overflow: hidden; background: url(../img/arrw-col.png); } /* loads the collapse arrow in advance */
+
+/* Let's talk: text on the left, Email and LinkedIn stacked in a column on the right, each with an icon */
+.contact-inner { grid-template-columns: 1fr auto; align-items: center; } /* links centred vertically beside the text */
+.contact-links { flex-direction: column; flex-wrap: nowrap; gap: 6px; margin: 0; } /* gap = space between Email and LinkedIn */
+.contact-links a { display: inline-flex; align-items: center; gap: 14px; text-decoration: none; }
+.contact-links a:hover { text-decoration: underline; }
+.contact-icon { width: 1.4em; height: 1.4em; flex: none; }
+@media (max-width: 720px) { .contact-inner { grid-template-columns: 1fr; } .contact-links { margin-top: 8px; } }
+
+/* Introduction: copy on the left, portrait on the right, exactly as tall as the copy.
+   The photo column is about a third of the width; the portrait is cropped from the sides to fit
+   (its dark background makes that invisible), so the copy keeps its width and line breaks. */
+.intro-inner { display: grid; grid-template-columns: 1fr minmax(220px, 38%); gap: clamp(28px, 5vw, 64px); align-items: stretch; }
+.intro-photo { position: relative; margin: 0; min-height: 260px; }
+.intro-photo img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 30%;
+  border: var(--case-line); border-radius: var(--radius);
+}
+.intro .place { margin-top: 0; }
+@media (max-width: 720px) {
+  /* phones: the portrait sits above the copy */
+  .intro-inner { grid-template-columns: 1fr; gap: 28px; }
+  .intro-photo { order: -1; min-height: 0; width: min(100%, 250px); aspect-ratio: 1; }
+}
+@media (max-width: 440px) {
+  /* phones: the portrait sits above the copy */
+  .intro-inner { grid-template-columns: 1fr; gap: 28px; }
+  .intro-photo { order: -1; min-height: 0; width: min(100%); aspect-ratio: 1; }
+}

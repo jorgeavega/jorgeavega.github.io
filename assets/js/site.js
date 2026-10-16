@@ -259,7 +259,7 @@
   var panels = document.querySelectorAll('.case');
   var ref = document.querySelector('#work .wrap');
   if (!reduceMotion && panels.length && ref && 'CSS' in window && CSS.supports('clip-path', 'inset(0 0 0 0 round 1px)')) {
-    var edge = 0, radius = 28, ticking = false;
+    var edge = 0, radius = 12, ticking = false;
     var clamp01 = function (x) { return x < 0 ? 0 : x > 1 ? 1 : x; };
     var ease = function (t) { return t * t * (3 - 2 * t); }; // smooth start and finish
 
@@ -269,7 +269,7 @@
       // On phones the cards start as wide as the header pill, so the text inside keeps a margin
       var hdr = document.querySelector('.site-header');
       if (window.innerWidth <= 720 && hdr) edge = hdr.getBoundingClientRect().left;
-      radius = window.innerWidth < 720 ? 20 : 28;
+      radius = 12; // corner radius of the case-study cards (px), on every screen size
       panels.forEach(function (el) { el.style.setProperty('--card-edge', edge + 'px'); el.style.setProperty('--card-radius', radius + 'px'); });
     };
     var update = function () {
