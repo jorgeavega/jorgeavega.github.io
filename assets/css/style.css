@@ -555,7 +555,7 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
   background: linear-gradient(150deg, rgba(0, 0, 0, 0) 30%, rgba(20, 18, 60, 0.35));
   transition: opacity 0.35s cubic-bezier(0.15, 0.8, 0.3, 1);
 }
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .js .case.is-closed:hover { translate: 0 -4px; filter: drop-shadow(0 18px 22px rgba(36, 31, 81, 0.28)); }
   .js .case.is-closed:hover .case-bg::after { opacity: 1; }
   .js .case.is-closed:hover .case-cover img { transform: scale(1.05); transition: transform 0.6s cubic-bezier(0.15, 0.8, 0.3, 1); }
@@ -614,9 +614,14 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
 }
 .js .case.is-open .case-toggle__icon { background-image: url(../img/arrw-col.png); }
 .js .case-toggle__arrow { display: none; }
-.js .case-toggle:hover .case-toggle__icon, .js .case-toggle:focus-visible .case-toggle__icon { background: url(../img/arrw-exp.png) center / contain no-repeat; opacity: 1; }
-.js .case.is-open .case-toggle:hover .case-toggle__icon, .js .case.is-open .case-toggle:focus-visible .case-toggle__icon { background-image: url(../img/arrw-col.png); }
-@media (hover: hover) { .js .case.is-closed:hover .case-toggle__icon { background: url(../img/arrw-exp.png) center / contain no-repeat; opacity: 1; } }
+.js .case-toggle:focus-visible .case-toggle__icon { background: url(../img/arrw-exp.png) center / contain no-repeat; opacity: 1; }
+.js .case.is-open .case-toggle:focus-visible .case-toggle__icon { background-image: url(../img/arrw-col.png); }
+/* hover only where a pointer really hovers: on touch screens :hover sticks after a tap */
+@media (hover: hover) and (pointer: fine) {
+  .js .case-toggle:hover .case-toggle__icon { background: url(../img/arrw-exp.png) center / contain no-repeat; opacity: 1; }
+  .js .case.is-open .case-toggle:hover .case-toggle__icon { background-image: url(../img/arrw-col.png); }
+  .js .case.is-closed:hover .case-toggle__icon { background: url(../img/arrw-exp.png) center / contain no-repeat; opacity: 1; }
+}
 .js .case-toggle::after { content: ""; position: absolute; width: 0; height: 0; overflow: hidden; background: url(../img/arrw-col.png); } /* loads the collapse arrow in advance */
 
 /* Let's talk: text on the left, Email and LinkedIn stacked in a column on the right, each with an icon */
