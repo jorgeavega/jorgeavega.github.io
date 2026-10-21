@@ -72,7 +72,7 @@ p { margin: 0 0 1em; }
 
 /* Introduction */
 .intro { padding-top: calc(96px + clamp(40px, 8vw, 65px)); background: var(--white); }
-.place { color: var(--muted); font-weight: 500; margin: 0 0 13px 5px; }
+.place { font-size: clamp(1.125rem, 0.925rem + 0.55vw, 1.375rem); color: var(--muted); font-weight: 500; margin: 0 0 13px 5px; }
 .intro h1 {
   font-size: clamp(2rem, 5.5vw, 4.5rem);
   font-weight: 800;
@@ -80,7 +80,7 @@ p { margin: 0 0 1em; }
   line-height: 1.02;
   max-width: 15ch;
 }
-.lead { font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.3; color: var(--muted); max-width: 42ch; margin: 18px 0 32px 5px; }
+.lead { font-size: clamp(1.2rem, 0.96rem + 0.66vw, 1.5rem); line-height: 1.3; color: var(--muted); max-width: 42ch; margin: 18px 0 32px 5px; }
 .button {
   display: inline-block; background: var(--blue); color: var(--white);
   font-weight: 700; font-size: 1.1rem; text-decoration: none;
@@ -349,7 +349,7 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
 .brand-card {
   position: relative; isolation: isolate; overflow: hidden;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
-  width: 100%; height: 250px; padding: 24px clamp(20px, 3vw, 34px);
+  width: 100%; height: 240px; padding: 24px clamp(20px, 3vw, 34px);
   background: linear-gradient(to top right, var(--deep), var(--blue)); /* dark at bottom-left corner, light at top-right */
   border: 1px solid var(--muted); border-radius: var(--radius);
   color: var(--white); font: inherit; cursor: pointer;
@@ -373,7 +373,15 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
   background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.28);
   font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em; color: var(--white);
 }
-@media (max-width: 560px) { .brand-cards { grid-template-columns: 1fr; } .brand-card__tag { font-size: 0.78rem; padding: 6px 12px; } }
+@media (max-width: 560px) {
+  .brand-cards { grid-template-columns: 1fr; }
+  /* phones: card height follows the screen width (240px at 560px wide, down to 160px), and the two
+     height-capped logos shrink with it so they keep their place in the card */
+  .brand-card { height: clamp(160px, calc(45vw - 10px), 240px); }
+  .brand-card .logo-t360 { max-height: clamp(60px, 18vw, 100px); }
+  .brand-card .logo-wc { max-height: clamp(42px, 12.6vw, 70px); }
+  .brand-card__tag { font-size: 0.78rem; padding: 6px 12px; }
+}
 .brand-card__tag { text-wrap: balance; } /* if a label ever wraps, split it into two even lines */
 @media (prefers-reduced-motion: reduce) { .brand-card, .brand-card::before { transition: none; } .brand-card:hover, .brand-card:focus-visible { transform: none; } }
 
@@ -643,13 +651,16 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
   border: var(--case-line); border-radius: var(--radius);
 }
 .intro .place { margin-top: 0; }
+
 @media (max-width: 720px) {
-  /* phones: the portrait sits above the copy */
+  /* phones and small tablets: the portrait sits above the copy */
   .intro-inner { grid-template-columns: 1fr; gap: 28px; }
-  .intro-photo { order: -1; min-height: 0; width: min(100%, 250px); aspect-ratio: 1; }
+  .intro-photo { order: -1; min-height: 0; width: 80%; aspect-ratio: 1; }
+  .intro h1 { max-width: 22ch; }
+  .lead { max-width: 40ch; }
 }
-@media (max-width: 440px) {
-  /* phones: the portrait sits above the copy */
-  .intro-inner { grid-template-columns: 1fr; gap: 28px; }
-  .intro-photo { order: -1; min-height: 0; width: min(100%); aspect-ratio: 1; }
+
+@media (max-width: 540px) {
+  /* small phones: the portrait fills the width */
+  .intro-photo { width: 100%; }
 }
