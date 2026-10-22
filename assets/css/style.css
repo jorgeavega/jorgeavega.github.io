@@ -350,7 +350,6 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
   position: relative; isolation: isolate; overflow: hidden;
   display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
   width: 100%; height: 240px; padding: 18px clamp(16px, 2.5vw, 22px);
-  background: linear-gradient(to top right, var(--deep), var(--blue)); /* shows while the thumbnail loads */
   border: 0; border-radius: var(--radius);
   color: var(--white); font: inherit; text-align: left; cursor: pointer;
   transition: transform 0.3s cubic-bezier(0.15, 0.8, 0.3, 1), box-shadow 0.3s cubic-bezier(0.15, 0.8, 0.3, 1);
@@ -360,7 +359,7 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
   background: linear-gradient(to bottom, rgba(0, 24, 40, 0) 25%, rgba(0, 24, 40, 0.55) 55%, rgba(0, 24, 40, 0.88));
   transition: opacity 0.3s cubic-bezier(0.15, 0.8, 0.3, 1);
 }
-.brand-card__thumb { position: absolute; inset: 0; z-index: -2; }
+.brand-card__thumb { position: absolute; inset: 0; z-index: -2; background: linear-gradient(to top right, var(--deep), var(--blue)); } /* shows while the thumbnail loads; kept off the button itself so no colour fringe shows at the rounded corners */
 .brand-card .brand-card__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .brand-card .brand-card__thumb--left img { object-position: 0 50%; } /* the XContent spread: keep its left edge when the card is narrower than the image */
 .brand-card:hover, .brand-card:focus-visible { transform: translateY(-3px); box-shadow: 0 16px 32px -20px rgba(36, 31, 81, 0.6); }
