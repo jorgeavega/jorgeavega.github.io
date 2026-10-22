@@ -355,14 +355,17 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
   color: var(--white); font: inherit; cursor: pointer;
   transition: transform 0.3s cubic-bezier(0.15, 0.8, 0.3, 1), border-color 0.3s cubic-bezier(0.15, 0.8, 0.3, 1), box-shadow 0.3s cubic-bezier(0.15, 0.8, 0.3, 1);
 }
-.brand-card::before {
+.brand-card::before { /* with a thumbnail: the dark overlay that keeps the white logo and label readable */
   content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(to top right, var(--ink), var(--deep)); /* hover: same direction, darker */
-  opacity: 0; transition: opacity 0.3s cubic-bezier(0.15, 0.8, 0.3, 1);
+  background: linear-gradient(to bottom, rgba(0, 40, 64, 0.46), rgba(0, 40, 64, 0.6) 45%, rgba(0, 32, 52, 0.72));
+  background-color: rgba(0, 24, 40, 0); transition: background-color 0.3s cubic-bezier(0.15, 0.8, 0.3, 1);
 }
+.brand-card__thumb { position: absolute; inset: 0; z-index: -2; }
+.brand-card .brand-card__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .brand-card:hover, .brand-card:focus-visible { transform: translateY(-3px); border-color: var(--blue); box-shadow: 0 16px 32px -20px rgba(36, 31, 81, 0.6); }
-.brand-card:hover::before, .brand-card:focus-visible::before { opacity: 1; }
+.brand-card:hover::before, .brand-card:focus-visible::before { background-color: rgba(0, 24, 40, 0.14); } /* hover: the overlay darkens a little */
 .brand-card img { width: auto; height: auto; border-radius: 0; background: none; }
+.brand-card img[class^="logo-"] { filter: drop-shadow(0 1px 8px rgba(0, 20, 36, 0.55)); } /* keeps the white logos clear of busy thumbnails */
 /* Logo sizes balanced by eye and by ink coverage: the Working Cloud logo is a solid cloud (about 48% ink)
    and the Technology 360 logo mostly thin lines (about 15%), so Technology 360 is shown larger.
    The max-widths keep the same 341 : 249 ratio when the cards get narrow on phones. */
@@ -370,7 +373,7 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
 .brand-card .logo-wc { max-height: 70px; max-width: 70%; }
 .brand-card__tag {
   display: inline-block; padding: 6px 14px; border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(0, 22, 36, 0.78); border: 1px solid rgba(255, 255, 255, 0.35);
   font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em; color: var(--white);
 }
 @media (max-width: 560px) {
