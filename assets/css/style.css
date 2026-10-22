@@ -364,14 +364,17 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
 .brand-card:hover, .brand-card:focus-visible { transform: translateY(-3px); box-shadow: 0 16px 32px -20px rgba(36, 31, 81, 0.6); }
 .brand-card:hover::before, .brand-card:focus-visible::before { opacity: 0.8; } /* hover and focus: the gradient lightens a little */
 .brand-card img { width: auto; height: auto; border-radius: 0; background: none; }
-.brand-card__play { /* Play icon on the video card: decorative, the label already says what the card opens */
-  position: absolute; left: 50%; top: 42%; width: 48px; height: 48px; margin: -24px 0 0 -24px;
+.brand-card__play { /* Play icon on the video card: frosted glass, decorative (the label already says what the card opens) */
+  position: absolute; left: 50%; top: 42%; width: 40px; height: 40px; margin: -20px 0 0 -20px;
   display: flex; align-items: center; justify-content: center; border-radius: 50%;
-  background: rgba(0, 22, 36, 0.6); border: 1.5px solid var(--on-dark); color: var(--white); pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.08)), rgba(0, 22, 36, 0.3);
+  -webkit-backdrop-filter: blur(10px) saturate(140%); backdrop-filter: blur(10px) saturate(140%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 6px 16px -6px rgba(0, 12, 24, 0.5);
+  color: var(--white); pointer-events: none;
   transition: transform 0.3s cubic-bezier(0.15, 0.8, 0.3, 1), background-color 0.3s cubic-bezier(0.15, 0.8, 0.3, 1);
 }
-.brand-card__play svg { width: 22px; height: 22px; margin-left: 1px; } /* the triangle is nudged right a touch so it looks centred */
-.brand-card:hover .brand-card__play, .brand-card:focus-visible .brand-card__play { transform: scale(1.08); background: rgba(0, 22, 36, 0.8); }
+.brand-card__play svg { width: 24px; height: 24px; margin-left: -1px; filter: drop-shadow(0 1px 2px rgba(0, 12, 24, 0.45)); }
+.brand-card:hover .brand-card__play, .brand-card:focus-visible .brand-card__play { transform: scale(1.08); }
 .brand-card__tag { /* its own dark background keeps the white text at 4.5:1 or better whatever the image */
   display: inline-block; max-width: 100%; padding: 6px 14px; border-radius: 16px; text-align: left;
   background: rgba(0, 22, 36, 0.55); border: 1px solid rgba(255, 255, 255, 0.3);
@@ -382,8 +385,8 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
   /* phones: card height follows the screen width (240px at 560px wide, down to 160px) */
   .brand-card { height: clamp(160px, calc(45vw - 10px), 240px); }
   .brand-card__tag { font-size: 0.78rem; padding: 6px 12px; }
-  .brand-card__play { width: 40px; height: 40px; margin: -20px 0 0 -20px; }
-  .brand-card__play svg { width: 18px; height: 18px; margin-left: 1px; }
+  .brand-card__play { width: 34px; height: 34px; margin: -17px 0 0 -17px; }
+  .brand-card__play svg { width: 20px; height: 20px; }
 }
 .brand-card__tag { text-wrap: balance; } /* if a label wraps, split it into two even lines */
 @media (prefers-reduced-motion: reduce) { .brand-card, .brand-card::before, .brand-card__play { transition: none; } .brand-card:hover, .brand-card:focus-visible { transform: none; } .brand-card:hover .brand-card__play, .brand-card:focus-visible .brand-card__play { transform: none; } }
