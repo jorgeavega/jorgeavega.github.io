@@ -342,61 +342,46 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
   .menu-toggle .bars span { transition: none; }
 }
 
-/* Gallery, Brand and corporate: two logo cards that open their work in the image viewer.
-   Hover follows the reximo.media cards (3px lift, 0.3s ease-out). The gradient darkens to the
-   logo navy on hover, which keeps both logos crisp (a lighter blue would wash them out). */
+/* Gallery cards: a thumbnail of the work fills the card and the label sits at the bottom-left on a dark
+   gradient that is clear at the top. The card opens its work in the image viewer.
+   Hover follows the reximo.media cards (3px lift, 0.3s ease-out); the gradient also lightens a little. */
 .brand-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .brand-card {
   position: relative; isolation: isolate; overflow: hidden;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
-  width: 100%; height: 240px; padding: 24px clamp(20px, 3vw, 34px);
-  background: linear-gradient(to top right, var(--deep), var(--blue)); /* dark at bottom-left corner, light at top-right */
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
+  width: 100%; height: 240px; padding: 18px clamp(16px, 2.5vw, 22px);
+  background: linear-gradient(to top right, var(--deep), var(--blue)); /* shows while the thumbnail loads */
   border: 1px solid var(--muted); border-radius: var(--radius);
-  color: var(--white); font: inherit; cursor: pointer;
+  color: var(--white); font: inherit; text-align: left; cursor: pointer;
   transition: transform 0.3s cubic-bezier(0.15, 0.8, 0.3, 1), border-color 0.3s cubic-bezier(0.15, 0.8, 0.3, 1), box-shadow 0.3s cubic-bezier(0.15, 0.8, 0.3, 1);
 }
-.brand-card::before { /* with a thumbnail: the dark overlay that keeps the white logo and label readable */
+.brand-card::before { /* transparent at the top, darkest behind the label */
   content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(to bottom, rgba(0, 40, 64, 0.46), rgba(0, 40, 64, 0.6) 45%, rgba(0, 32, 52, 0.72));
-  background-color: rgba(0, 24, 40, 0); transition: background-color 0.3s cubic-bezier(0.15, 0.8, 0.3, 1);
+  background: linear-gradient(to bottom, rgba(0, 24, 40, 0) 25%, rgba(0, 24, 40, 0.55) 55%, rgba(0, 24, 40, 0.88));
+  transition: opacity 0.3s cubic-bezier(0.15, 0.8, 0.3, 1);
 }
 .brand-card__thumb { position: absolute; inset: 0; z-index: -2; }
 .brand-card .brand-card__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .brand-card:hover, .brand-card:focus-visible { transform: translateY(-3px); border-color: var(--blue); box-shadow: 0 16px 32px -20px rgba(36, 31, 81, 0.6); }
-.brand-card:hover::before, .brand-card:focus-visible::before { background-color: rgba(0, 24, 40, 0.14); } /* hover: the overlay darkens a little */
+.brand-card:hover::before, .brand-card:focus-visible::before { opacity: 0.8; } /* hover and focus: the gradient lightens a little */
 .brand-card img { width: auto; height: auto; border-radius: 0; background: none; }
-.brand-card img[class^="logo-"] { filter: drop-shadow(0 1px 8px rgba(0, 20, 36, 0.55)); } /* keeps the white logos clear of busy thumbnails */
-/* Logo sizes balanced by eye and by ink coverage: the Working Cloud logo is a solid cloud (about 48% ink)
-   and the Technology 360 logo mostly thin lines (about 15%), so Technology 360 is shown larger.
-   The max-widths keep the same 341 : 249 ratio when the cards get narrow on phones. */
-.brand-card .logo-t360 { max-height: 100px; max-width: 70%; }
-.brand-card .logo-wc { max-height: 70px; max-width: 70%; }
-.brand-card__tag {
-  display: inline-block; padding: 6px 14px; border-radius: 999px;
-  background: rgba(0, 22, 36, 0.78); border: 1px solid rgba(255, 255, 255, 0.35);
+.brand-card__tag { /* its own dark background keeps the white text at 4.5:1 or better whatever the image */
+  display: inline-block; max-width: 100%; padding: 6px 14px; border-radius: 16px; text-align: left;
+  background: rgba(0, 22, 36, 0.55); border: 1px solid rgba(255, 255, 255, 0.3);
   font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em; color: var(--white);
 }
 @media (max-width: 560px) {
   .brand-cards { grid-template-columns: 1fr; }
-  /* phones: card height follows the screen width (240px at 560px wide, down to 160px), and the two
-     height-capped logos shrink with it so they keep their place in the card */
+  /* phones: card height follows the screen width (240px at 560px wide, down to 160px) */
   .brand-card { height: clamp(160px, calc(45vw - 10px), 240px); }
-  .brand-card .logo-t360 { max-height: clamp(60px, 18vw, 100px); }
-  .brand-card .logo-wc { max-height: clamp(42px, 12.6vw, 70px); }
   .brand-card__tag { font-size: 0.78rem; padding: 6px 12px; }
 }
-.brand-card__tag { text-wrap: balance; } /* if a label ever wraps, split it into two even lines */
+.brand-card__tag { text-wrap: balance; } /* if a label wraps, split it into two even lines */
 @media (prefers-reduced-motion: reduce) { .brand-card, .brand-card::before { transition: none; } .brand-card:hover, .brand-card:focus-visible { transform: none; } }
 
 /* Print and documents: three cards in a row on wide screens, stacked below 900px */
 .brand-cards--3 { grid-template-columns: repeat(3, 1fr); }
 @media (max-width: 900px) { .brand-cards--3 { grid-template-columns: 1fr; } }
-.brand-card .logo-fs, .brand-card .logo-xc, .brand-card .logo-as { max-width: none; max-height: none; }
-/* Print and documents logos, balanced by ink coverage (Future Shop 26%, XContent 44%, Aren Sauvage 54% of
-   their outline): the most solid logo is shown narrowest. Percentages keep the balance on narrow cards. */
-.brand-card .logo-fs { width: min(78%, 300px); }
-.brand-card .logo-xc { width: min(75%, 230px); }
-.brand-card .logo-as { width: min(65%, 200px); }
 
 /* Image viewer: page arrows for items with several pages (eBook and catalogue spreads) */
 .lb-page {
@@ -420,7 +405,6 @@ h1 .brand, h2 .brand, h3 .brand, .work-index .brand, .group-title .brand { font-
 
 /* eDM row: the G.A.I. logo sized against the Future Shop logo (similar ink coverage, 25% vs 26%,
    but a taller shape; shown a little larger than an exact ink match so its metal detail stays readable) */
-.brand-card .logo-gai { max-width: none; max-height: none; width: min(70%, 220px); }
 
 /* Gallery: Video and Concept work side by side, each with its own heading line; stacked on phones */
 .gallery-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
